@@ -1,0 +1,713 @@
+{
+  "name": "Graphite Pearl Cursor",
+  "version": "1.0.0",
+  "size_scale": 0.9,
+  "pointer_angle_from_up_degrees": 33.0,
+  "upright_pointer_symmetric": true,
+  "cursor_canvas_sizes": [
+    32,
+    48,
+    64,
+    96,
+    128
+  ],
+  "animation_canvas_sizes": [
+    32,
+    48,
+    64
+  ],
+  "animation_frames": 12,
+  "frame_jiffies": 4,
+  "source_assets": {
+    "arrow": "433bd9d5d92eb051efeaa0689bd861bc0c9075481f1e042aa1fada63b204f566",
+    "busy": "96b4ab0317655826ec1227a8218ee0ee442fb0ae121bb2b424cb3deeebd9c4c7",
+    "handwriting": "86ade9a650d2f5d48123000f1953c7ea0ba438533b67af2df9920976f97bf054",
+    "horizontal": "7962e345b685ce45397f588ad70f677c87ed8fb2c3b14769f92ad6e7abdf8793",
+    "location": "95b395d4a9f382b9a26a89ac7c73b90f0c7792546cc8bd4d70ad8d66781a9a09",
+    "move": "6c722eb2e243b2625113b99e697400be27727b9bba7993e53c184025db0dc13a",
+    "person": "9070cb5e31e8901d47adb77d72d59a8b3e4ac64160f122b0e6a8b4864ec16e7a",
+    "precision": "818ae28934baeb9567e28d5f37c21ef5ab57cc5a813d067baf007419facd8fd2",
+    "question": "bfecf7d55cc8333e15c32898fe6e9d307dab2c1f8f56f7515ce4ff12b4f4d68d",
+    "text": "5abecb57de7f138736c1010b15919fdb3befddaa1df0298e7308f446b2872cf3",
+    "unavailable": "b0d775133978e45f6aeddaa9dc5b9eab529d4cd9d5fa01d9737f005078d0f5ea"
+  },
+  "roles": [
+    {
+      "role": "arrow",
+      "label_zh": "正常选择",
+      "file": "cursors/arrow.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        46,
+        41
+      ],
+      "hotspots": {
+        "32": [
+          12,
+          10
+        ],
+        "48": [
+          17,
+          15
+        ],
+        "64": [
+          23,
+          20
+        ],
+        "96": [
+          34,
+          31
+        ],
+        "128": [
+          46,
+          41
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "cd94274e72789c9b46583e9bd49da68996fa982d7c01125a6ca6c5927ff10642",
+      "visible_extent_at_64": 24
+    },
+    {
+      "role": "help",
+      "label_zh": "帮助选择",
+      "file": "cursors/help.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        46,
+        41
+      ],
+      "hotspots": {
+        "32": [
+          12,
+          10
+        ],
+        "48": [
+          17,
+          15
+        ],
+        "64": [
+          23,
+          20
+        ],
+        "96": [
+          34,
+          31
+        ],
+        "128": [
+          46,
+          41
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "80bef090a7b45e04feff769a6503c3717188f63afd7aadd0fdd21c0171d1338d",
+      "visible_extent_at_64": 29
+    },
+    {
+      "role": "working",
+      "label_zh": "后台工作",
+      "file": "cursors/working.ani",
+      "animated": true,
+      "hotspot_logical_128": [
+        46,
+        41
+      ],
+      "hotspots": {
+        "32": [
+          12,
+          10
+        ],
+        "48": [
+          17,
+          15
+        ],
+        "64": [
+          23,
+          20
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64
+      ],
+      "sha256": "42b521fbc30804393ada438a32f9b6f164326859a335654088b1a7cb03bbda4a",
+      "visible_extent_at_64": 31
+    },
+    {
+      "role": "busy",
+      "label_zh": "忙碌",
+      "file": "cursors/busy.ani",
+      "animated": true,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64
+      ],
+      "sha256": "1d7a68b20e22014cb125473e21ee0974f0ddc1ee02344f8a6ef21ecff657973b",
+      "visible_extent_at_64": 28
+    },
+    {
+      "role": "precision",
+      "label_zh": "精确选择",
+      "file": "cursors/precision.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "c941ec667d75cbad3e5d153c4982ced864a4c99b7b41692f4c1d67f715c10d0a",
+      "visible_extent_at_64": 28
+    },
+    {
+      "role": "text",
+      "label_zh": "文本选择",
+      "file": "cursors/text.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "45a8a3f525a95cd680ff69c0e9b489341cb0a9706555160a3a9bd0b0a7c9d43e",
+      "visible_extent_at_64": 29
+    },
+    {
+      "role": "handwriting",
+      "label_zh": "手写",
+      "file": "cursors/handwriting.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        40,
+        85
+      ],
+      "hotspots": {
+        "32": [
+          10,
+          21
+        ],
+        "48": [
+          15,
+          32
+        ],
+        "64": [
+          20,
+          42
+        ],
+        "96": [
+          30,
+          64
+        ],
+        "128": [
+          40,
+          85
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "d60112e639390c4e3fe4a014cbaedac85d793e428147e810c2f364388e62dda1",
+      "visible_extent_at_64": 26
+    },
+    {
+      "role": "unavailable",
+      "label_zh": "不可用",
+      "file": "cursors/unavailable.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "b6753e4f641c277f794f2e8f5ba7ec59fcd4c81f4e6d777caf7c688a42c7dba4",
+      "visible_extent_at_64": 28
+    },
+    {
+      "role": "vertical",
+      "label_zh": "垂直调整",
+      "file": "cursors/vertical.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "f22abdf47c5217673cd24f79b7a4e03ccc75710f70edb3851c04676baa6b9ccd",
+      "visible_extent_at_64": 30
+    },
+    {
+      "role": "horizontal",
+      "label_zh": "水平调整",
+      "file": "cursors/horizontal.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "3479fd13b081da586de49481b0f968c31e68e6ae4a0076a83d5f9f26aba58cde",
+      "visible_extent_at_64": 30
+    },
+    {
+      "role": "diagonal_nwse",
+      "label_zh": "对角调整 1",
+      "file": "cursors/diagonal_nwse.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "aa2da1e86139aaa8b72bd507d672e8f779163df2c37a1150795c82faf69ba843",
+      "visible_extent_at_64": 22
+    },
+    {
+      "role": "diagonal_nesw",
+      "label_zh": "对角调整 2",
+      "file": "cursors/diagonal_nesw.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "5190d900580d340060651b491fb1b207738a54eb436d5474bb0da1667068699c",
+      "visible_extent_at_64": 22
+    },
+    {
+      "role": "move",
+      "label_zh": "移动",
+      "file": "cursors/move.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "74bd40a80f09dd1c9c44a446b270b8e9f8b31528eefdaf0514b3f5837c85372e",
+      "visible_extent_at_64": 28
+    },
+    {
+      "role": "alternate",
+      "label_zh": "候选选择",
+      "file": "cursors/alternate.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        42
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          10
+        ],
+        "48": [
+          24,
+          16
+        ],
+        "64": [
+          32,
+          21
+        ],
+        "96": [
+          48,
+          32
+        ],
+        "128": [
+          64,
+          42
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "0d70ea0d23524b5ff817d36ab9d897458b8760e873c464419273fc1919113f8f",
+      "visible_extent_at_64": 22
+    },
+    {
+      "role": "link",
+      "label_zh": "链接选择",
+      "file": "cursors/link.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        42
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          10
+        ],
+        "48": [
+          24,
+          16
+        ],
+        "64": [
+          32,
+          21
+        ],
+        "96": [
+          48,
+          32
+        ],
+        "128": [
+          64,
+          42
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "0d70ea0d23524b5ff817d36ab9d897458b8760e873c464419273fc1919113f8f",
+      "visible_extent_at_64": 22
+    },
+    {
+      "role": "location",
+      "label_zh": "位置选择",
+      "file": "cursors/location.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        90
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          22
+        ],
+        "48": [
+          24,
+          34
+        ],
+        "64": [
+          32,
+          45
+        ],
+        "96": [
+          48,
+          68
+        ],
+        "128": [
+          64,
+          90
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "2170c3de8c3f4933796a3343ed0b2edbe1060cbd7263f91b8471dd9c769677fb",
+      "visible_extent_at_64": 28
+    },
+    {
+      "role": "person",
+      "label_zh": "人员选择",
+      "file": "cursors/person.cur",
+      "animated": false,
+      "hotspot_logical_128": [
+        64,
+        64
+      ],
+      "hotspots": {
+        "32": [
+          16,
+          16
+        ],
+        "48": [
+          24,
+          24
+        ],
+        "64": [
+          32,
+          32
+        ],
+        "96": [
+          48,
+          48
+        ],
+        "128": [
+          64,
+          64
+        ]
+      },
+      "sizes": [
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "sha256": "5432c731a41915f998f513b94cf80dc6ddf980bfe899594758db03c1529e94d7",
+      "visible_extent_at_64": 28
+    }
+  ]
+}

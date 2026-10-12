@@ -1,0 +1,15 @@
+{
+  "origin": "AI 辅助生成素材，经过轮廓校正与程序化处理。",
+  "pointer_master": "pearl-pointer-symmetric-up.png",
+  "pointer_angle_from_up_degrees": 33,
+  "upright_roles": [
+    "alternate",
+    "link"
+  ],
+  "processing": "同一对称母版生成两个方向；统一可见尺寸并清理零散像素。",
+  "animation": {
+    "frames": 12,
+    "frame_jiffies": 4
+  },
+  "license": "CC-BY-4.0"
+}

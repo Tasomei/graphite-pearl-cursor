@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+_备份/
+**/_备份/
+system-backup/
+*.reg
+*.clixml
+.env
+.env.*
+.venv/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+/Graphite-Pearl-Cursor-Windows.zip
