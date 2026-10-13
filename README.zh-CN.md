@@ -30,7 +30,7 @@
 
 ## 构建与验证
 
-需要 Windows、Python 3.10+ 和 Pillow。在仓库根目录依次运行：
+需要 Windows、PowerShell 5.1 或 7+、Python 3.10+ 和 Pillow。在仓库根目录依次运行：
 
 ```powershell
 py -m pip install -r requirements.txt
@@ -46,6 +46,14 @@ py .\source\validate_pearl_theme.py
 
 ```powershell
 .\source\test_pearl_theme_settings.ps1
+```
+
+```powershell
+.\source\test_cursor_recovery.ps1
+```
+
+```powershell
+py -m unittest discover -s source -p "test_*.py"
 ```
 
 输出：`package/GraphitePearl/` 和安装压缩包。

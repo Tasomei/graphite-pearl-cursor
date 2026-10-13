@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$ExpectedScheme = '',
     [string]$RestoreBackup = ''
 )
@@ -170,13 +170,57 @@ function Reload-Cursors {
         throw "系统光标刷新失败：$([Runtime.InteropServices.Marshal]::GetLastWin32Error())"
     }
     # 单独刷新人员选择，避免系统沿用旧图像。
-    $taskPersonPath = [string](Get-ItemProperty -LiteralPath 'HKCU:\Control Panel\Cursors').Person
+    $taskSettings = Get-ItemProperty -LiteralPath 'HKCU:\Control Panel\Cursors'
+    $taskPersonProperty = $taskSettings.PSObject.Properties['Person']
+    $taskPersonPath = if ($null -ne $taskPersonProperty) { [string]$taskPersonProperty.Value } else { '' }
+    # 空覆盖路径使用系统默认光标。
+    if ([string]::IsNullOrWhiteSpace($taskPersonPath)) { return }
+    $taskPersonPath = [Environment]::ExpandEnvironmentVariables($taskPersonPath)
     $taskPerson = [GraphitePearlNative]::LoadImageW([IntPtr]::Zero,$taskPersonPath,2,0,0,0x50)
     if ($taskPerson -eq [IntPtr]::Zero) { throw '人员选择光标加载失败' }
     if (-not [GraphitePearlNative]::SetSystemCursor($taskPerson,32672)) {
         [GraphitePearlNative]::DestroyCursor($taskPerson) | Out-Null
         throw '人员选择光标刷新失败'
     }
+}
+
+function Assert-RestoreCursorFiles($Records) {
+    # 写回设置前检查原文件，允许系统默认覆盖为空。
+    foreach ($taskRecord in $Records) {
+        if (-not $taskRecord.Exists -or $taskRecord.Name -notin $taskRoleNames) { continue }
+        $taskPath = [Environment]::ExpandEnvironmentVariables([string]$taskRecord.Value)
+        if (-not [string]::IsNullOrWhiteSpace($taskPath) -and -not (Test-Path -LiteralPath $taskPath -PathType Leaf)) {
+            throw "原光标文件不存在，停止恢复：$($taskRecord.Name)"
+        }
+    }
+}
+
+function Restore-ApplyState($Snapshot, $CursorKey, $SchemesKey, $ThemesKey, [bool]$RegistryChanged, [bool]$ThemeChanged) {
+    # 各项独立还原，汇总失败而不中断后续回滚。
+    $taskFailures = [Collections.Generic.List[string]]::new()
+    if ($RegistryChanged) {
+        foreach ($taskRecord in $Snapshot.Records) {
+            try { Restore-RegistryRecord $CursorKey $taskRecord }
+            catch { $taskFailures.Add("光标设置 $($taskRecord.Name)：$($_.Exception.Message)") }
+        }
+        try { Restore-RegistryRecord $SchemesKey $Snapshot.SchemeRecord }
+        catch { $taskFailures.Add("方案记录：$($_.Exception.Message)") }
+        try { Restore-RegistryRecord $ThemesKey $Snapshot.ThemeMouseRecord }
+        catch { $taskFailures.Add("主题指针设置：$($_.Exception.Message)") }
+    }
+    if ($ThemeChanged) {
+        try {
+            $taskRestore = Prepare-ThemeRestore $Snapshot.ThemeFile
+            # 原件已有备份；原子替换前复核文件内容。
+            $taskBytes = [byte[]]($taskRestore.Document.Encoding.GetPreamble() + $taskRestore.Document.Encoding.GetBytes($taskRestore.Text))
+            Write-ThemeBytes $Snapshot.ThemeFile.Path $taskRestore.Document.Bytes $taskBytes
+        } catch { $taskFailures.Add("主题文件：$($_.Exception.Message)") }
+    }
+    if ($RegistryChanged) {
+        try { Reload-Cursors }
+        catch { $taskFailures.Add("光标刷新：$($_.Exception.Message)") }
+    }
+    return $taskFailures.ToArray()
 }
 
 $taskKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey('Control Panel\Cursors',$true)
@@ -191,6 +235,7 @@ try {
             throw '还原文件不在本主题备份目录内'
         }
         $taskSaved = Import-Clixml -LiteralPath $taskRestorePath
+        Assert-RestoreCursorFiles $taskSaved.Records
         if ($taskSaved.ThemeFile) {
             $taskCurrentTheme = Read-RegistryRecord $taskThemes 'CurrentTheme'
             if (($taskCurrentTheme | ConvertTo-Json -Compress) -ne ($taskSaved.CurrentThemeRecord | ConvertTo-Json -Compress)) {
@@ -309,19 +354,10 @@ try {
         if ((Read-ThemeDocument $taskThemePath).Text -cne $taskThemeText) { throw '应用后主题内容不一致' }
     } catch {
         $taskFailure = $_
-        if ($taskRegistryChanged) {
-            foreach ($taskRecord in $taskSnapshot.Records) { Restore-RegistryRecord $taskKey $taskRecord }
-            Restore-RegistryRecord $taskSchemes $taskSnapshot.SchemeRecord
-            Restore-RegistryRecord $taskThemes $taskSnapshot.ThemeMouseRecord
-            Reload-Cursors
-        }
-        if ($taskThemeChanged) {
-            $taskRestore = Prepare-ThemeRestore $taskSnapshot.ThemeFile
-            # 原件已有备份；回滚前再次确认文件未变。
-            $taskNow = [IO.File]::ReadAllBytes($taskThemePath)
-            if ([Convert]::ToBase64String($taskNow) -ne [Convert]::ToBase64String($taskRestore.Document.Bytes)) { throw '回滚期间主题已发生外部变更' }
-            $taskBytes = [byte[]]($taskRestore.Document.Encoding.GetPreamble() + $taskRestore.Document.Encoding.GetBytes($taskRestore.Text))
-            Write-ThemeBytes $taskThemePath $taskRestore.Document.Bytes $taskBytes
+        $taskRollbackFailures = @(Restore-ApplyState $taskSnapshot $taskKey $taskSchemes $taskThemes $taskRegistryChanged $taskThemeChanged)
+        if ($taskRollbackFailures.Count) {
+            $taskMessage = "应用失败：$($taskFailure.Exception.Message)；回滚问题：$($taskRollbackFailures -join '；')；备份文件：$taskBackupFile"
+            throw [InvalidOperationException]::new($taskMessage,$taskFailure.Exception)
         }
         throw $taskFailure
     }

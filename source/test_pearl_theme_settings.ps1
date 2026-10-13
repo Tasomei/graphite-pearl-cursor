@@ -1,4 +1,4 @@
-$ErrorActionPreference = 'Stop'
+﻿$ErrorActionPreference = 'Stop'
 $taskSource = Join-Path $PSScriptRoot 'apply_pearl_theme.ps1'
 $taskTokens = $null
 $taskErrors = $null

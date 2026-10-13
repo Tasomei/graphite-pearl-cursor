@@ -31,7 +31,7 @@ Keep the backup and previous cursor files until restoration is no longer needed.
 
 ## Build and verify
 
-Requires Windows, Python 3.10+ and Pillow. From the repository root:
+Requires Windows, PowerShell 5.1 or 7+, Python 3.10+ and Pillow. From the repository root:
 
 ```powershell
 py -m pip install -r requirements.txt
@@ -47,6 +47,14 @@ py .\source\validate_pearl_theme.py
 
 ```powershell
 .\source\test_pearl_theme_settings.ps1
+```
+
+```powershell
+.\source\test_cursor_recovery.ps1
+```
+
+```powershell
+py -m unittest discover -s source -p "test_*.py"
 ```
 
 Output: `package/GraphitePearl/` and the installation ZIP.

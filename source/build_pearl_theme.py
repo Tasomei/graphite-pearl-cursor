@@ -4,7 +4,6 @@ import hashlib
 import io
 import json
 import struct
-import zipfile
 from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
@@ -13,6 +12,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 from cursor_format import native_check, png_bytes, ANIMATION_FRAMES, ANIMATION_JIFFIES, CURSOR_SIZES, ROLES, build_ani_bytes, build_cur_bytes, find_preview_font
 from pearl_artwork import ASSETS, POINTER_ANGLE, POINTER_MASTER, core_box, hotspots, layer, render_pearl
+from package_layout import build_archive, validate_package_files
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -137,6 +137,7 @@ def animation_preview():
 
 
 def main():
+    validate_package_files(PACKAGE,require_complete=False)
     roles = [replace(role,hotspot=hotspots().get(role.key,(64,64))) for role in ROLES]
     entries,previews = [],{}
     for role in roles:
@@ -187,13 +188,8 @@ def main():
     animation_preview()
     for name in ('LICENSE','LICENSE-ASSETS.md','THIRD_PARTY_NOTICES.md'):
         save(PACKAGE/name,(ROOT/name).read_bytes())
-    save(PACKAGE/'Apply.ps1',(ROOT/'source/apply_pearl_theme.ps1').read_text(encoding='utf-8').encode('utf-8-sig'))
-    buffer = io.BytesIO()
-    with zipfile.ZipFile(buffer,'w',zipfile.ZIP_DEFLATED) as archive:
-        for path in sorted(PACKAGE.rglob('*')):
-            if path.is_file() and '_备份' not in path.parts:
-                archive.write(path,Path('GraphitePearl')/path.relative_to(PACKAGE))
-    save(ROOT/'Graphite-Pearl-Cursor-Windows.zip',buffer.getvalue())
+    save(PACKAGE/'Apply.ps1',(ROOT/'source/apply_pearl_theme.ps1').read_text(encoding='utf-8-sig').encode('utf-8-sig'))
+    save(ROOT/'Graphite-Pearl-Cursor-Windows.zip',build_archive(PACKAGE))
     print('PASS: 17 roles; 75 static and 72 animated images; native loading and hotspots')
     print('PASS: alternate and link are byte-identical; moving ring separated from pointer')
     print('Visible extents at 64px:',{r['role']:r['visible_extent_at_64'] for r in entries})

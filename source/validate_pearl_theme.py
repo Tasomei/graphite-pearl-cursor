@@ -14,6 +14,7 @@ from PIL import ImageChops, ImageOps
 from build_pearl_theme import ANIMATED_SIZES, PACKAGE, ROOT, ani_frames, decode
 from cursor_format import ANIMATION_FRAMES, CURSOR_SIZES, ROLES, native_check
 from pearl_artwork import ASSETS, POINTER_MASTER, hotspots, render_pearl
+from package_layout import PACKAGE_FILES, PACKAGE_NAME, validate_package_files
 
 
 def digest(data):
@@ -21,6 +22,7 @@ def digest(data):
 
 
 def main():
+    validate_package_files(PACKAGE)
     manifest = json.loads((PACKAGE/'manifest.json').read_text(encoding='utf-8'))
     assert manifest['version'] == (ROOT/'VERSION').read_text(encoding='utf-8').strip()
     expected = {role.key:role for role in ROLES}
@@ -54,14 +56,18 @@ def main():
     assets = {'arrow':POINTER_MASTER}
     assets.update({path.stem:path for path in (ASSETS/'pearl').glob('*.png')})
     assert manifest['source_assets'] == {key:digest(path.read_bytes()) for key,path in assets.items()}
-    assert (PACKAGE/'Apply.ps1').read_text(encoding='utf-8-sig') == (ROOT/'source/apply_pearl_theme.ps1').read_text(encoding='utf-8')
+    installer = (PACKAGE/'Apply.ps1').read_bytes()
+    assert installer.startswith(b'\xef\xbb\xbf') and not installer.startswith(b'\xef\xbb\xbf'*2)
+    assert (PACKAGE/'Apply.ps1').read_text(encoding='utf-8-sig') == (ROOT/'source/apply_pearl_theme.ps1').read_text(encoding='utf-8-sig')
     with zipfile.ZipFile(ROOT/'Graphite-Pearl-Cursor-Windows.zip') as archive:
         assert archive.testzip() is None
-        files = {str(Path('GraphitePearl')/path.relative_to(PACKAGE)).replace('\\','/') for path in PACKAGE.rglob('*') if path.is_file() and '_备份' not in path.parts}
-        assert set(archive.namelist()) == files
+        files = {PACKAGE_NAME+'/'+name for name in PACKAGE_FILES}
+        assert len(archive.namelist()) == len(files) and set(archive.namelist()) == files
         for name in archive.namelist():
             assert '_备份' not in name
             assert archive.read(name) == (PACKAGE.parent/name).read_bytes()
+    for path in (ROOT/'source').glob('*.ps1'):
+        assert path.read_bytes().startswith(b'\xef\xbb\xbf'),path.name
     for path in (ROOT/'source').glob('*.py'):
         source = path.read_text(encoding='utf-8')
         tree = ast.parse(source)
